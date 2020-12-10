@@ -13,10 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package org.tensorflow.lite.examples.classification.customview;
+package flower.classifier.customview;
 
 import java.util.List;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Recognition;
+import flower.classifier.tflite.Classifier.Recognition;
 
 public interface ResultsView {
   public void setResults(final List<Recognition> results);

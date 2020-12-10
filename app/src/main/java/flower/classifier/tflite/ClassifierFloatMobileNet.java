@@ -13,11 +13,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package org.tensorflow.lite.examples.classification.tflite;
+package flower.classifier.tflite;
 
 import android.app.Activity;
 import java.io.IOException;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
+
 import org.tensorflow.lite.support.common.TensorOperator;
 import org.tensorflow.lite.support.common.ops.NormalizeOp;
 
@@ -47,7 +47,6 @@ public class ClassifierFloatMobileNet extends Classifier {
     super(activity, device, numThreads);
   }
 
-  // TODO: Specify model.tflite as the model file and labels.txt as the label file
   @Override
   protected String getModelPath() {
     return "model.tflite";

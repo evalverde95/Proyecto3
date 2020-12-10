@@ -1,2 +1,2 @@
-rootProject.name = 'TFLite Flower Classification Codelab (start) App'
+rootProject.name = 'Flower Classifier App'
 include ':app'

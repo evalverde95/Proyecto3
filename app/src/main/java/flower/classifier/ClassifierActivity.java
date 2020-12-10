@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package flower.classifier;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,15 +26,14 @@ import android.util.Size;
 import android.util.TypedValue;
 import android.view.View;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.tensorflow.lite.examples.classification.env.BorderedText;
-import org.tensorflow.lite.examples.classification.env.Logger;
-import org.tensorflow.lite.examples.classification.tflite.Classifier;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import flower.classifier.env.BorderedText;
+import flower.classifier.env.Logger;
+import flower.classifier.tflite.Classifier;
+import flower.classifier.tflite.Classifier.Device;
 
 public class ClassifierActivity extends CameraActivity implements OnImageAvailableListener {
   private static final Logger LOGGER = new Logger();

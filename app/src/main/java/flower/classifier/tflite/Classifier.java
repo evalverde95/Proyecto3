@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package org.tensorflow.lite.examples.classification.tflite;
+package flower.classifier.tflite;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -29,8 +29,8 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.examples.classification.env.Logger;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
+import flower.classifier.env.Logger;
+
 import org.tensorflow.lite.gpu.GpuDelegate;
 import org.tensorflow.lite.support.common.FileUtil;
 import org.tensorflow.lite.support.common.TensorOperator;
@@ -67,11 +67,9 @@ public abstract class Classifier {
   private final int imageSizeY;
 
   /** Optional GPU delegate for acceleration. */
-  // TODO: Declare a GPU delegate
-
+  private GpuDelegate gpuDelegate = null;
 
   /** An instance of the driver class to run model inference with Tensorflow Lite. */
-  // TODO: Declare a TFLite interpreter
   protected Interpreter tflite;
 
   /** Options for configuring the Interpreter. */
@@ -178,15 +176,14 @@ public abstract class Classifier {
     tfliteModel = FileUtil.loadMappedFile(activity, getModelPath());
     switch (device) {
       case GPU:
-        // TODO: Create a GPU delegate instance and add it to the interpreter options
-
+        gpuDelegate = new GpuDelegate();
+        tfliteOptions.addDelegate(gpuDelegate);
         break;
       case CPU:
         break;
     }
     tfliteOptions.setNumThreads(numThreads);
 
-    // TODO: Create a TFLite interpreter instance
     tflite = new Interpreter(tfliteModel, tfliteOptions);
 
     // Loads labels out from the label file.
@@ -230,7 +227,6 @@ public abstract class Classifier {
     // Runs the inference call.
     Trace.beginSection("runInference");
     long startTimeForReference = SystemClock.uptimeMillis();
-    // TODO: Run TFLite inference
     tflite.run(inputImageBuffer.getBuffer(), outputProbabilityBuffer.getBuffer().rewind());
 
     long endTimeForReference = SystemClock.uptimeMillis();
@@ -238,8 +234,6 @@ public abstract class Classifier {
     LOGGER.v("Timecost to run model inference: " + (endTimeForReference - startTimeForReference));
 
     // Gets the map of label and probability.
-    // TODO: Use TensorLabel from TFLite Support Library to associate the probabilities
-    //       with category labels
     Map<String, Float> labeledProbability =
             new TensorLabel(labels, probabilityProcessor.process(outputProbabilityBuffer))
                     .getMapWithFloatValue();
@@ -253,11 +247,13 @@ public abstract class Classifier {
   /** Closes the interpreter and model to release resources. */
   public void close() {
     if (tflite != null) {
-      // TODO: Close the interpreter
       tflite.close();
       tflite = null;
     }
-    // TODO: Close the GPU delegate
+    if (gpuDelegate != null) {
+      gpuDelegate.close();
+      gpuDelegate = null;
+    }
 
 
     tfliteModel = null;
@@ -281,7 +277,6 @@ public abstract class Classifier {
     // Creates processor for the TensorImage.
     int cropSize = Math.min(bitmap.getWidth(), bitmap.getHeight());
     int numRoration = sensorOrientation / 90;
-    // TODO: Define an ImageProcessor from TFLite Support Library to do preprocessing
     ImageProcessor imageProcessor =
             new ImageProcessor.Builder()
                     .add(new ResizeWithCropOrPadOp(cropSize, cropSize))

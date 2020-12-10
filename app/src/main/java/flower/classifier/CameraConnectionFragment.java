@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package flower.classifier;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -52,6 +52,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,8 +61,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import org.tensorflow.lite.examples.classification.customview.AutoFitTextureView;
-import org.tensorflow.lite.examples.classification.env.Logger;
+import flower.classifier.customview.AutoFitTextureView;
+import flower.classifier.env.Logger;
 
 /**
  * Camera Connection Fragment that captures images from camera.

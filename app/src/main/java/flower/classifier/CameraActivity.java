@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package flower.classifier;
 
 import android.Manifest;
 import android.app.Fragment;
@@ -49,12 +49,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+
 import java.nio.ByteBuffer;
 import java.util.List;
-import org.tensorflow.lite.examples.classification.env.ImageUtils;
-import org.tensorflow.lite.examples.classification.env.Logger;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
-import org.tensorflow.lite.examples.classification.tflite.Classifier.Recognition;
+import flower.classifier.env.ImageUtils;
+import flower.classifier.env.Logger;
+import flower.classifier.tflite.Classifier.Device;
+import flower.classifier.tflite.Classifier.Recognition;
 
 public abstract class CameraActivity extends AppCompatActivity
     implements OnImageAvailableListener,
