@@ -31,12 +31,16 @@ import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Trace;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageProxy;
+
 import android.util.Size;
 import android.view.Surface;
 import android.view.View;
@@ -51,8 +55,11 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.concurrent.Executors;
+
 import flower.classifier.env.ImageUtils;
 import flower.classifier.env.Logger;
 import flower.classifier.tflite.Classifier.Device;
@@ -101,6 +108,7 @@ public abstract class CameraActivity extends AppCompatActivity
   private Device device = Device.CPU;
   private int numThreads = -1;
 
+
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
     LOGGER.d("onCreate " + this);
@@ -114,6 +122,9 @@ public abstract class CameraActivity extends AppCompatActivity
     } else {
       requestPermission();
     }
+
+
+
 
     threadsTextView = findViewById(R.id.threads);
     plusImageView = findViewById(R.id.plus);
@@ -192,6 +203,7 @@ public abstract class CameraActivity extends AppCompatActivity
     device = Device.valueOf(deviceSpinner.getSelectedItem().toString());
     numThreads = Integer.parseInt(threadsTextView.getText().toString().trim());
   }
+
 
   protected int[] getRgbBytes() {
     imageConverter.run();

@@ -21,14 +21,21 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.View;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import flower.classifier.env.BorderedText;
 import flower.classifier.env.Logger;
@@ -149,6 +156,10 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
 
   /** Called when the user taps the Send button */
   public void callSummary(View view) {
+    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    String fname = "classify_"+ timeStamp +".jpg";
+    MediaStore.Images.Media.insertImage(getContentResolver(), rgbFrameBitmap,fname,null);
+
     if (classifier != null) {
       final List<Classifier.Recognition> results =
               classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
@@ -168,4 +179,5 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     }
 
   }
+
 }
