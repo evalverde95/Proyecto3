@@ -1,2 +1,2 @@
+rootProject.name = 'Flower Classifier App'
 include ':app'
-rootProject.name = "Proyecto3"

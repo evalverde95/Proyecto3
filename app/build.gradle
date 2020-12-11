@@ -1,39 +1,56 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
+
+project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
+
+assert file(project.ext.ASSET_DIR + "/model.tflite").exists()
+assert file(project.ext.ASSET_DIR + "/labels.txt").exists()
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
-
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.proyecto3"
-        minSdkVersion 16
-        targetSdkVersion 30
+        applicationId "flower.classifier"
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    aaptOptions {
+        noCompress "tflite"
+    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
 dependencies {
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    def camerax_version = '1.0.0-beta12'
+    // CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    // CameraX Lifecycle Library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    // Task API
+    implementation "com.google.android.gms:play-services-tasks:17.2.0"
+    // CameraX View class
+    implementation 'androidx.camera:camera-view:1.0.0-alpha19'
+    // Build off of nightly TensorFlow Lite
+    implementation('org.tensorflow:tensorflow-lite:0.0.0-nightly') { changing = true }
+    implementation('org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly') { changing = true }
+    implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
 }
