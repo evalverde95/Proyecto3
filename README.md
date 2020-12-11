@@ -12,6 +12,8 @@ La interfaz es sumamente simple y tiene un botón para almacenar y clasificar la
 
 <center><img src="img/example.png"></center>
 
+Las imagenes de la clasificación se salvan en la galería, como ejemplo:
+<center><img src="img/saved.png"></center>
 ## Uso
 
 Para correr la aplicación se recomienda el uso de Android Studio y se debe abrir el proyecto y ejecutarlo. El presente laboratorio se probó y ejecutó en Android Studio para Windows, utilizando el emulador como dispositivo, sin embargo, la aplicación puede ser cargada en un disposito real por medio de Android Studio.
